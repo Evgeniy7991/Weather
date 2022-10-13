@@ -15,11 +15,11 @@ class ViewController: UIViewController {
         
         "","Moscow", "London",
         "Minsk", "Paris", "Berlin",
-        
         ]
-    
+
     let weather = DatWeather()
     let forecast = Forecast()
+    let viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,6 @@ class ViewController: UIViewController {
             locationManager.startUpdatingLocation()
         }
     }
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -65,18 +64,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ViewControllerTableViewCell", for: indexPath) as? ViewControllerTableViewCell else { return UITableViewCell()}
         
-        JSONMan.shared.sendRequest(text: array[indexPath.row]) {  (weather) in
+        
+        viewModel.sendRequest(text: array[indexPath.row]) { [weak self] (weather) in
             
             DispatchQueue.main.async {
                 
                 if indexPath.row == 0 {
-                    cell.configureLocation(weatherLocation: self.weatherLocation)
+                    cell.configureLocation(weatherLocation: self?.weatherLocation)
                 } else {
                     
-                    cell.configure(weather: weather, indexPath: indexPath, text: self.array[indexPath.row])
+                    cell.configure(weather: weather, indexPath: indexPath, text: self?.array[indexPath.row] ?? "error")
                 }
             }
-            
         }
         return cell
     }
@@ -86,19 +85,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "MainPageViewController") as? MainPageViewController else { return }
         
         for (index, value) in array.enumerated() {
-            
             if index == indexPath.row {
                 
                 if indexPath.row == 0 {
                     
                     controller.text =  weatherLocation.name ?? "Error in didSelectRow"
-                    print(weatherLocation.name)
                     navigationController?.pushViewController(controller, animated: true)
                     
                 } else {
-                
-                controller.text = value
-                navigationController?.pushViewController(controller, animated: true)
+                    
+                    controller.text = value
+                    navigationController?.pushViewController(controller, animated: true)
                 }
             }
         }
@@ -109,8 +106,7 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
             
-            JSONMan.shared.updateWeatherInfoLocation(latitude: lastLocation.coordinate.latitude, lontitude: lastLocation.coordinate.longitude) { [weak self] (weather) in
-                
+            viewModel.updateWeatherInfoLocation(latitude: lastLocation.coordinate.latitude, lontitude: lastLocation.coordinate.longitude) { [weak self] (weather) in
                 
                 DispatchQueue.main.async {
                     self?.weatherLocation = weather

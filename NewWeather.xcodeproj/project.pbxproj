@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A005AB928F5341700C596BB /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A005AB828F5341700C596BB /* Bindable.swift */; };
+		7A005ABB28F537AC00C596BB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A005ABA28F537AC00C596BB /* ViewModel.swift */; };
 		7AF6A5EF28DB40AD00B32506 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6A5EE28DB40AD00B32506 /* Forecast.swift */; };
 		7AF6A5F228DB5CB800B32506 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6A5F128DB5CB800B32506 /* DataSource.swift */; };
 		7AF6F49428DEC091000F883C /* DataWeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6F49328DEC091000F883C /* DataWeatherLocation.swift */; };
+		7AF713D628F6F5DF00E3C71D /* MainPageViewModell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF713D528F6F5DF00E3C71D /* MainPageViewModell.swift */; };
 		7AF88B7628D97EF20019F8D5 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF88B7528D97EF20019F8D5 /* MainPageViewController.swift */; };
-		7AFCB41428E6B01500B91A3B /* JSONMan 19-05-15-376.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFCB41328E6B01500B91A3B /* JSONMan 19-05-15-376.swift */; };
 		7AFCB41628E6B02700B91A3B /* ViewControllerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFCB41528E6B02600B91A3B /* ViewControllerTableViewCell.swift */; };
 		7AFCB41828E6B03800B91A3B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFCB41728E6B03800B91A3B /* CustomTableViewCell.swift */; };
 		7AFCB41A28E6B10B00B91A3B /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFCB41928E6B10B00B91A3B /* String+extension.swift */; };
@@ -44,11 +46,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A005AB828F5341700C596BB /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		7A005ABA28F537AC00C596BB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		7AF6A5EE28DB40AD00B32506 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		7AF6A5F128DB5CB800B32506 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		7AF6F49328DEC091000F883C /* DataWeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataWeatherLocation.swift; sourceTree = "<group>"; };
+		7AF713D528F6F5DF00E3C71D /* MainPageViewModell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewModell.swift; sourceTree = "<group>"; };
 		7AF88B7528D97EF20019F8D5 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
-		7AFCB41328E6B01500B91A3B /* JSONMan 19-05-15-376.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONMan 19-05-15-376.swift"; sourceTree = "<group>"; };
 		7AFCB41528E6B02600B91A3B /* ViewControllerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTableViewCell.swift; sourceTree = "<group>"; };
 		7AFCB41728E6B03800B91A3B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		7AFCB41928E6B10B00B91A3B /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
@@ -95,7 +99,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7AF6A5F028DB5CAC00B32506 /* Modells */ = {
+		7AF6A5F028DB5CAC00B32506 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				7AF6A5F128DB5CB800B32506 /* DataSource.swift */,
@@ -103,7 +107,7 @@
 				7AF6A5EE28DB40AD00B32506 /* Forecast.swift */,
 				7AF6F49328DEC091000F883C /* DataWeatherLocation.swift */,
 			);
-			path = Modells;
+			path = API;
 			sourceTree = "<group>";
 		};
 		7AF6A5F328DB5CDE00B32506 /* Cells */ = {
@@ -111,7 +115,6 @@
 			children = (
 				7AFCB41528E6B02600B91A3B /* ViewControllerTableViewCell.swift */,
 				7AFCB41728E6B03800B91A3B /* CustomTableViewCell.swift */,
-				7AFCB41328E6B01500B91A3B /* JSONMan 19-05-15-376.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -120,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				7AFCB41928E6B10B00B91A3B /* String+extension.swift */,
+				7A005AB828F5341700C596BB /* Bindable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -157,11 +161,13 @@
 			children = (
 				7AFCB41C28E6B1B800B91A3B /* Localization */,
 				7AFCB41B28E6B18100B91A3B /* Extensions */,
-				7AF6A5F028DB5CAC00B32506 /* Modells */,
+				7AF6A5F028DB5CAC00B32506 /* API */,
 				7AF6A5F328DB5CDE00B32506 /* Cells */,
 				7AFD086F28D89F8500B639E2 /* AppDelegate.swift */,
 				7AFD087128D89F8500B639E2 /* ViewController.swift */,
+				7A005ABA28F537AC00C596BB /* ViewModel.swift */,
 				7AF88B7528D97EF20019F8D5 /* MainPageViewController.swift */,
+				7AF713D528F6F5DF00E3C71D /* MainPageViewModell.swift */,
 				7AFD087328D89F8500B639E2 /* Main.storyboard */,
 				7AFD087628D89F8600B639E2 /* Assets.xcassets */,
 				7AFD087828D89F8600B639E2 /* LaunchScreen.storyboard */,
@@ -323,13 +329,15 @@
 			files = (
 				7AF88B7628D97EF20019F8D5 /* MainPageViewController.swift in Sources */,
 				7AF6A5EF28DB40AD00B32506 /* Forecast.swift in Sources */,
+				7A005AB928F5341700C596BB /* Bindable.swift in Sources */,
 				7AFD08A028D8A7F600B639E2 /* WeatherData.swift in Sources */,
-				7AFCB41428E6B01500B91A3B /* JSONMan 19-05-15-376.swift in Sources */,
 				7AF6F49428DEC091000F883C /* DataWeatherLocation.swift in Sources */,
+				7A005ABB28F537AC00C596BB /* ViewModel.swift in Sources */,
 				7AFCB41A28E6B10B00B91A3B /* String+extension.swift in Sources */,
 				7AFCB41628E6B02700B91A3B /* ViewControllerTableViewCell.swift in Sources */,
 				7AFCB41828E6B03800B91A3B /* CustomTableViewCell.swift in Sources */,
 				7AFD087228D89F8500B639E2 /* ViewController.swift in Sources */,
+				7AF713D628F6F5DF00E3C71D /* MainPageViewModell.swift in Sources */,
 				7AF6A5F228DB5CB800B32506 /* DataSource.swift in Sources */,
 				7AFD087028D89F8500B639E2 /* AppDelegate.swift in Sources */,
 			);

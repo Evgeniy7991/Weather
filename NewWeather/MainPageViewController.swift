@@ -7,8 +7,8 @@ class MainPageViewController: UIViewController {
     var text = ""
     var weather: DatWeather?
     var forecast: Forecast?
-    var textTwo = ""
-    
+   
+    var mainPageViewModell = MainPageViewModell()
     
     @IBOutlet weak var windSpeedHeaderLabel: UILabel!
     @IBOutlet weak var pressureHeaderLabel: UILabel!
@@ -18,7 +18,6 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var sunsetHeaderLabel: UILabel!
     @IBOutlet weak var tempMinHeaderLabel: UILabel!
     @IBOutlet weak var tempMaxHeaderLabel: UILabel!
-    
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cityLabel: UILabel!
@@ -46,26 +45,23 @@ class MainPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        JSONMan.shared.sendRequest(text: text) { (weather) in
-            DispatchQueue.main.async {
-                
-                self.apdateWeather(weather)
-            }
-        }
-        
-        JSONMan.shared.sendForecastRequest(text: text) { (forecast) in
+        bind()
+        bindLabel()
+        mainPageViewModell.sendRequest(text: text)
+        mainPageViewModell.sendForecastRequest(text: text) { (forecast) in
             
             DispatchQueue.main.async {
                 self.forecast = forecast
                 self.tableView.reloadData()
             }
         }
+        mainPageViewModell.setLabelText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        windSpeedHeaderLabel.text = "wind speed".localized()
+//        windSpeedHeaderLabel.text = "wind speed".localized()
         pressureHeaderLabel.text = "presure".localized()
         humidityHeaderLabel.text = "humidity".localized()
         feelsLikeHeaderLabel.text = "feels-like".localized()
@@ -75,20 +71,32 @@ class MainPageViewController: UIViewController {
         tempMaxHeaderLabel.text = "temp max".localized()
     }
     
-    private func apdateWeather (_ weather: DatWeather?) {
+    private func bindLabel () {
         
-        guard let temppp = weather?.name else { return }
+        mainPageViewModell.labelText.bind { [weak self] (text) in
+            self?.windSpeedLabel.text = text
+        }
+    }
+    
+    
+    private func bind () {
         
-        self.cityLabel.text = "\(String(describing: temppp))"
-        self.conditionLabel.text = DataSource.weatherIDs[weather?.weather?[0].id ?? 0]
-        self.temperatureLabel.text = String(weather?.main?.temp ?? 0.0) + "ºC"
-        self.iconImageView.image = UIImage(named: weather?.weather?[0].icon ?? "images")
-        self.windSpeedLabel.text =  String(describing: weather?.wind?.speed ?? 0.0) + "m/s"
-        self.feelsLikeLabel.text = String(describing: weather?.main?.feels_like ?? 0.0)
-        self.pressureLabel.text = String(describing: weather?.main?.pressure ?? 0.0)
-        self.humidityLabel.text = String(describing: weather?.main?.humidity ?? 0.0)
-        
-        self.currentTimeLabel.text = createData(weather: weather)
+        mainPageViewModell.weatherModel.bind { [weak self] (weather) in
+            
+            guard let temppp = weather.name else { return }
+            
+            self?.cityLabel.text = "\(String(describing: temppp))"
+            self?.conditionLabel.text = DataSource.weatherIDs[weather.weather?[0].id ?? 0]
+            self?.temperatureLabel.text = String(weather.main?.temp ?? 0.0) + "ºC"
+            self?.iconImageView.image = UIImage(named: weather.weather?[0].icon ?? "images")
+            self?.windSpeedLabel.text =  String(describing: weather.wind?.speed ?? 0.0) + "m/s"
+            self?.feelsLikeLabel.text = String(describing: weather.main?.feels_like ?? 0.0)
+            self?.pressureLabel.text = String(describing: weather.main?.pressure ?? 0.0)
+            self?.humidityLabel.text = String(describing: weather.main?.humidity ?? 0.0)
+            
+            self?.currentTimeLabel.text = self?.createData(weather: weather)
+            
+        }
     }
     
     private func createData(weather: DatWeather? ) -> String{
@@ -108,7 +116,7 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         
         return forecast?.list?.count ?? 2
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }

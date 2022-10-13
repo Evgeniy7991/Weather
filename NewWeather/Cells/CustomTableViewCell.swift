@@ -27,19 +27,7 @@ class CustomTableViewCell: UITableViewCell {
                 if let main = row.main {
                     
                     tempLabel.text = String(main.temp ?? 0) + "ºC"
-                    
-//                    if let info = row.weather {
-//
-//
-//                        descriptionLabel.text = list[0].weather?[0].description
-//                        stateImageView.image = UIImage(named: info[0].icon ?? "images")
-//                    }
-                    
-                    
-                    
-                    
-                    
-                    
+            
                     if let info = row.weather {
 
 
