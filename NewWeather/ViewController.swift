@@ -10,21 +10,22 @@ class ViewController: UIViewController {
     
     var text: String?
     var weatherLocation = DataWeatherLocation()
+    var language = Locale.preferredLanguages[0]
+    
     let locationManager = CLLocationManager()
-    var array = [
-        
-        "","Moscow", "London",
-        "Minsk", "Paris", "Berlin",
-        ]
+    var array = [ "","Moscow", "London", "Minsk", "Paris", "Berlin",]
 
     let weather = DatWeather()
     let forecast = Forecast()
     let viewModel = ViewModel()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         startLocationManager()
+       print( language )
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,15 +65,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ViewControllerTableViewCell", for: indexPath) as? ViewControllerTableViewCell else { return UITableViewCell()}
         
-        
-        viewModel.sendRequest(text: array[indexPath.row]) { [weak self] (weather) in
+        viewModel.sendRequest(text: array[indexPath.row], language: language) { [weak self] (weather) in
             
             DispatchQueue.main.async {
-                
                 if indexPath.row == 0 {
                     cell.configureLocation(weatherLocation: self?.weatherLocation)
                 } else {
-                    
                     cell.configure(weather: weather, indexPath: indexPath, text: self?.array[indexPath.row] ?? "error")
                 }
             }

@@ -6,9 +6,9 @@ class ViewModel {
     
     let weatherModel = Bindable<DatWeather>(DatWeather())
     
-    func sendRequest( text: String, completion: @escaping (DatWeather)->()) {
+    func sendRequest( text: String, language: String, completion: @escaping (DatWeather)->()) {
         
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(text)&units=metric&lang=ru&appid=4d0130acb14062d5a07ba908bf7112f2" ) else { return }
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(text)&units=metric&lang=\(language)&appid=4d0130acb14062d5a07ba908bf7112f2" ) else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

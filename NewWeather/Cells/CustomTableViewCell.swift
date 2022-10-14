@@ -30,8 +30,7 @@ class CustomTableViewCell: UITableViewCell {
             
                     if let info = row.weather {
 
-
-                        descriptionLabel.text = DataSource.weatherIDs[info[0].id ?? 0]
+                        descriptionLabel.text = info[0].description
                         stateImageView.image = UIImage(named: info[0].icon ?? "images")
                     }
                 } else { print("main Wrong")}

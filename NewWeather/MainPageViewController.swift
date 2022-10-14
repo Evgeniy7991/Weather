@@ -4,10 +4,11 @@ import UIKit
 
 class MainPageViewController: UIViewController {
     
+    let language = Locale.preferredLanguages[0]
+    
     var text = ""
     var weather: DatWeather?
     var forecast: Forecast?
-   
     var mainPageViewModell = MainPageViewModell()
     
     @IBOutlet weak var windSpeedHeaderLabel: UILabel!
@@ -40,15 +41,17 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var tempMinLabel: UILabel!
     @IBOutlet weak var tempMaxLabel: UILabel!
     
+    @IBOutlet weak var headerTimeLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         bind()
-        bindLabel()
-        mainPageViewModell.sendRequest(text: text)
-        mainPageViewModell.sendForecastRequest(text: text) { (forecast) in
+        bindLocalize()
+        mainPageViewModell.setLocalized()
+        mainPageViewModell.sendRequest(text: text, language: language)
+        mainPageViewModell.sendForecastRequest(text: text, language: language) { (forecast) in
             
             DispatchQueue.main.async {
                 self.forecast = forecast
@@ -60,24 +63,23 @@ class MainPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        windSpeedHeaderLabel.text = "wind speed".localized()
-        pressureHeaderLabel.text = "presure".localized()
-        humidityHeaderLabel.text = "humidity".localized()
-        feelsLikeHeaderLabel.text = "feels-like".localized()
-        sunriseHeaderLabel.text = "sunrise".localized()
-        sunsetHeaderLabel.text = "sunset".localized()
-        tempMinHeaderLabel.text = "temp min".localized()
-        tempMaxHeaderLabel.text = "temp max".localized()
+    
     }
     
-    private func bindLabel () {
+    private func bindLocalize () {
         
-        mainPageViewModell.labelText.bind { [weak self] (text) in
-            self?.windSpeedLabel.text = text
+        mainPageViewModell.dictionaryLabel.bind { [ weak self ] (dictionary) in
+            self?.windSpeedHeaderLabel.text = dictionary["wind speed"]
+            self?.pressureHeaderLabel.text = dictionary["presure"]
+            self?.humidityHeaderLabel.text = dictionary["humidity"]
+            self?.feelsLikeHeaderLabel.text = dictionary["feels-like"]
+            self?.sunriseHeaderLabel.text = dictionary["sunrise"]
+            self?.sunsetHeaderLabel.text = dictionary["sunset"]
+            self?.tempMinHeaderLabel.text = dictionary["temp min"]
+            self?.tempMaxHeaderLabel.text = dictionary["temp max"]
+            self?.headerTimeLabel.text = dictionary["time"]
         }
     }
-    
     
     private func bind () {
         
@@ -93,9 +95,7 @@ class MainPageViewController: UIViewController {
             self?.feelsLikeLabel.text = String(describing: weather.main?.feels_like ?? 0.0)
             self?.pressureLabel.text = String(describing: weather.main?.pressure ?? 0.0)
             self?.humidityLabel.text = String(describing: weather.main?.humidity ?? 0.0)
-            
             self?.currentTimeLabel.text = self?.createData(weather: weather)
-            
         }
     }
     
@@ -113,14 +113,13 @@ class MainPageViewController: UIViewController {
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return forecast?.list?.count ?? 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTableViewCell", for: indexPath) as? CustomTableViewCell else { return UITableViewCell()
+        }
         
         cell.configureTwo(forecast: forecast, indexPath: indexPath)
         return cell
